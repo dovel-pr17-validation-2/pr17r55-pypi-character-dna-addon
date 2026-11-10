@@ -1,0 +1,278 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Launch: Blender",
+            "command": "uv run python -m poly_hammer_utils.launch blender ${input:blender-version} ${input:debug}",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Launch: Unreal",
+            "command": "uv run python -m poly_hammer_utils.launch unreal ${input:unreal-version} ${input:debug}",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Pytest: With Coverage",
+            "command": "uv run pytest ${input:test-suite} ${input:test-case} --cov-config=.coveragerc --cov=src/addons/character_dna --cov-report=xml:reports/coverage/results.xml --cov-report=html:reports/coverage/html",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Mkdocs: Serve",
+            "command": "uv run mkdocs serve --dev-addr localhost:8080 --livereload --open",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Ruff: Check",
+            "command": "uv run ruff check",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Ruff: Format",
+            "command": "uv run ruff check --fix; uv run ruff format",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Package: Addon",
+            "command": "uv run python -m poly_hammer_utils.addon.packager",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Pre-commit: Run",
+            "command": "uv run pre-commit run ${input:pre-commit-scope} --verbose --show-diff-on-failure",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Benchmark: Run Profiling",
+            "command": "uv run python scripts/profiling_utils/ci_benchmark.py --iterations ${input:benchmark-iterations} --warmup ${input:benchmark-warmup} ${input:benchmark-shape-keys} --output reports/profiling --format all",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Benchmark: Compare Results",
+            "command": "uv run python scripts/profiling_utils/ci_benchmark.py --compare reports/profiling/baseline/baseline.json reports/profiling/current/current.json --threshold ${input:benchmark-threshold}",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        },
+        {
+            "label": "Version: Set Addon Version",
+            "command": "uv run python scripts/pre-commit/check_addon_version.py character_dna --set-version ${input:addon-version}",
+            "type": "shell",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "addon-version",
+            "type": "promptString",
+            "description": "Enter the version to set (e.g., 1.0.0)",
+            "default": "0.5.19"
+        },
+        {
+            "id": "blender-version",
+            "type": "pickString",
+            "default": "5.2",
+            "options": [
+                "4.5",
+                "5.0",
+                "5.1",
+                "5.2"
+            ],
+            "description": "What blender version to launch"
+        },
+        {
+            "id": "unreal-version",
+            "type": "pickString",
+            "default": "5.8",
+            "options": [
+                "5.6",
+                "5.7",
+                "5.8"
+            ],
+            "description": "What unreal version to launch"
+        },
+        {
+            "id": "debug",
+            "type": "pickString",
+            "default": "0",
+            "options": [
+                "no",
+                "yes"
+            ],
+            "description": "Should use debugger?"
+        },
+        {
+            "id": "test-suite",
+            "type": "pickString",
+            "default": "",
+            "options": [
+                "",
+                "tests/test_animation.py",
+                "tests/test_rbf_edits.py",
+                "tests/test_convert_to_dna.py",
+                "tests/test_rig_instance_ops.py",
+                "tests/test_reference_blend_file.py",
+                "tests/test_addon_registration.py",
+                "tests/test_head_calibrator.py",
+                "tests/test_head_exporter.py",
+                "tests/test_head_rig_logic.py",
+                "tests/test_body_rig_logic.py",
+                "tests/test_body_rbf_editor.py"
+            ],
+            "description": "What test suite do you want to run?"
+        },
+        {
+            "id": "test-case",
+            "type": "promptString",
+            "description": "What test case do you want to run? And test name after -k or leave empty to run all",
+            "default": "-k "
+        },
+        {
+            "id": "pre-commit-scope",
+            "type": "pickString",
+            "default": "--all-files",
+            "options": [
+                "--all-files",
+                "ruff --all-files",
+                "markdownlint --all-files",
+                "check-addon-version --all-files",
+                "cspell --all-files --hook-stage manual",
+                "bandit --all-files --hook-stage manual",
+            ],
+            "description": "Pre-commit scope: all files, staged only, or specific hook"
+        },
+        {
+            "id": "benchmark-iterations",
+            "type": "pickString",
+            "default": "50",
+            "options": [
+                "10",
+                "25",
+                "50",
+                "100"
+            ],
+            "description": "Number of benchmark iterations"
+        },
+        {
+            "id": "benchmark-warmup",
+            "type": "pickString",
+            "default": "10",
+            "options": [
+                "0",
+                "5",
+                "10",
+                "20"
+            ],
+            "description": "Number of warmup iterations before benchmarking"
+        },
+        {
+            "id": "benchmark-threshold",
+            "type": "pickString",
+            "default": "15",
+            "options": [
+                "5",
+                "10",
+                "15",
+                "20",
+                "25"
+            ],
+            "description": "Regression threshold percentage for comparison"
+        },
+        {
+            "id": "benchmark-shape-keys",
+            "type": "pickString",
+            "default": "",
+            "options": [
+                "",
+                "--import-shape-keys"
+            ],
+            "description": "Import shape keys after loading DNA (slower but enables shape key benchmarking)"
+        }
+    ]
+}

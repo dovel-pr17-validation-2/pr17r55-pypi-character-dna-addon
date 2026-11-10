@@ -1,0 +1,144 @@
+{
+    // =========================================================================
+    // File Settings
+    // =========================================================================
+    "files.associations": {
+        ".coveragerc": "ini",
+        "*.toml": "toml"
+    },
+    "files.maxMemoryForLargeFilesMB": 2048.0,
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/scratches/*/**": true,
+        "**/reports/*/**": true,
+        "**/.fbx": true,
+        "${workspaceFolder}/tests/test_files/*/**": true,
+        "${workspaceFolder}/tests/extra_test_files/*/**": true
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/.coverage": true,
+        "**/.coverage.*": true,
+        "**/.hypothesis": true,
+        "**/.mypy_cache": true,
+        "**/.nox": true,
+        "**/.pytest_cache": true,
+        "**/.ruff_cache": true,
+        "**/.tox": true,
+        "**/.fbx": true,
+        "${workspaceFolder}/tests/test_files/*/**": true,
+        "${workspaceFolder}/tests/extra_test_files/*/**": true
+    },
+    // =========================================================================
+    // Python Environment Settings
+    // =========================================================================
+    "python.terminal.activateEnvironment": true,
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    "python.envFile": "${workspaceFolder}/.env",
+    // =========================================================================
+    // Pylance Settings
+    // Type checking, extraPaths, and exclude are read from pyproject.toml [tool.pyright]
+    // Only VS Code-specific settings that can't be in pyproject.toml are here
+    // =========================================================================
+    "python.languageServer": "Pylance",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.enablePytestSupport": true,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.completeFunctionParens": true,
+    // =========================================================================
+    // Testing Settings
+    // Test paths and args are read from pyproject.toml [tool.pytest.ini_options]
+    // =========================================================================
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    // =========================================================================
+    // Editor & Formatting Settings
+    // Line length and formatting rules are read from pyproject.toml [tool.ruff]
+    // =========================================================================
+    "editor.tabCompletion": "on",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        120
+    ],
+    "editor.wordWrap": "off",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit",
+        "source.fixAll.markdownlint": "explicit"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    // =========================================================================
+    // Markdownlint Settings (matches .pre-commit-config.yaml)
+    // =========================================================================
+    "markdownlint.config": {
+        "MD013": false,
+        "MD033": false,
+        "MD041": false,
+        "MD059": false
+    },
+    "markdownlint.ignore": [
+        "AGENT_INSTRUCTIONS.md",
+        ".github/**"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "always",
+            "source.organizeImports.ruff": "always"
+        }
+    },
+    // =========================================================================
+    // Ruff Extension Settings
+    // All linting/formatting rules are read from pyproject.toml [tool.ruff]
+    // =========================================================================
+    "ruff.configurationPreference": "filesystemFirst",
+    "ruff.fixAll": true,
+    "ruff.organizeImports": true,
+    // =========================================================================
+    // Terminal Environment Variables
+    // =========================================================================
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${env:PYTHONPATH};${workspaceFolder}/scripts;${workspaceFolder}/.venv/Lib/site-packages;${workspaceFolder}/src/addons",
+        "PYTHONUNBUFFERED": "1",
+        "BLENDER_SCRIPTS_FOLDERS": "${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/scripts:${workspaceFolder}/.venv/Lib/site-packages:${workspaceFolder}/src/addons",
+        "PYTHONUNBUFFERED": "1",
+        "BLENDER_SCRIPTS_FOLDERS": "${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/scripts:${workspaceFolder}/.venv/Lib/site-packages:${workspaceFolder}/src/addons",
+        "PYTHONUNBUFFERED": "1",
+        "BLENDER_SCRIPTS_FOLDERS": "${workspaceFolder}/src"
+    },
+    // =========================================================================
+    // CSpell Settings
+    // Word list and ignore paths are read from cspell.json
+    // =========================================================================
+    "cSpell.import": [
+        "${workspaceFolder}/cspell.json"
+    ],
+    // =========================================================================
+    // Even Better TOML Settings
+    // =========================================================================
+    "evenBetterToml.schema.associations": {
+        "**/pyproject.toml": false
+    },
+    // =========================================================================
+    // Jupyter Settings
+    // =========================================================================
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "python-envs.pythonProjects": [
+        {
+            "path": "",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+  "configurations": [
+    {
+      "name": "Run Active Python File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}/.env",
+      "justMyCode": false
+    },
+    {
+      "name": "Run Pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}/.env",
+      "args": [
+        "${input:test-suite}",
+        "-k",
+        "${input:test-case}",
+        "--junitxml=./reports/pytest-results.xml"
+      ],
+      "justMyCode": false
+    },
+    {
+      "name": "Python Debugger: Attach",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": "${input:debug-port-number}"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "test-suite",
+      "type": "pickString",
+      "default": "",
+      "options": [
+        "",
+        "tests/test_animation.py",
+        "tests/test_rbf_edits.py",
+        "tests/test_convert_to_dna.py",
+        "tests/test_rig_instance_ops.py",
+        "tests/test_reference_blend_file.py",
+        "tests/test_addon_registration.py",
+        "tests/test_head_calibrator.py",
+        "tests/test_head_exporter.py",
+        "tests/test_head_rig_logic.py",
+        "tests/test_body_rig_logic.py",
+        "tests/test_body_rbf_editor.py"
+      ],
+      "description": "What test suite do you want to run?"
+    },
+    {
+      "id": "debug-port-number",
+      "type": "pickString",
+      "default": "5678",
+      "options": [
+        "5678",
+        "5679"
+      ],
+      "description": "What debug port to attach to?"
+    },
+    {
+      "id": "test-case",
+      "type": "promptString",
+      "description": "What test case do you want to run?",
+      "default": ""
+    }
+  ]
+}
